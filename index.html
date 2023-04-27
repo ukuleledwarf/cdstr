@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вопросы на экзамен КИ 2023</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="theory.js"></script>
+</head>
+<body>
+    <div id="content"></div>
+    <script src="render.js"></script>
+    <script>
+        document.addEventListener('click', e => {
+            if(e.target.matches('.section__theme-title')){
+                e.target.parentElement.classList.toggle('unfolded');
+            }
+            const label = e.target.closest('.section__question-option');
+            if(label){
+                label.classList.add('section__question-option_clicked');
+                label.closest('.section__question').classList.add('section__question_revealed');
+            }
+        });
+    </script>
+</body>
+</html>
