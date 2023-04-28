@@ -57,6 +57,11 @@ body {
 
 .section__question-text {
     font-weight: bold;
+    display: flex;
+}
+
+.section__question-text-number {
+    flex-shrink: 0;
 }
 
 .section__question-options {
@@ -66,7 +71,7 @@ body {
 .section__question-option {
     display: flex;
     align-items: flex-start;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .section__question_revealed .section__question-option_clicked {
@@ -78,7 +83,7 @@ body {
 
 .section__question-radio {
     flex-shrink: 0;
-    margin-left: 10px;
+    margin-left: 18px;
     margin-right: 10px;
     position: relative;
     top: 2px;
@@ -86,9 +91,11 @@ body {
 
 .section__question-img {
     flex-shrink: 0;
+    margin-top: 10px;
     display: block;
-    width: calc(100% - 30px);
-    max-width: 500px;
+    margin-left: auto;
+    width: calc(100% - 18px);
+    max-width: 1000px;
     border-radius: 5px;
     box-shadow: 2px 2px 5px rgba(0,0,0,.2);
 }

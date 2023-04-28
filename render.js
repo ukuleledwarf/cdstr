@@ -8,12 +8,17 @@ const contentHTML = theory.map(section => `
                     <div class="section__theme-content">
                         ${theme.questions.map((question, qIndex) => `
                             <div class="section__question">
-                                <div class="section__question-text">${qIndex + 1}. ${question.text}</div>
+                                <div class="section__question-text">
+                                    <div class="section__question-text-number">${qIndex + 1}.&nbsp;</div>
+                                    ${question.text}
+                                </div>
                                 <div class="section__question-options">
                                     ${question.options.map(option => `
                                         <label id="${option.id}" class="section__question-option ${option.id === question.answer ? 'section__question-option_answer' : ''}">
-                                            <input class="section__question-radio" type="radio" name="radio-${question.answer}">
-                                            ${option.img ? `<img class="section__question-img" src="${option.img}"/>` : option.text}
+                                            ${option.img ? 
+                                                `<img class="section__question-img" src="${option.img}"/>` : 
+                                                `<input class="section__question-radio" type="radio" name="radio-${question.answer}"></input>${option.text}`
+                                            }
                                         </label>
                                     `).join('')}
                                 </div>
