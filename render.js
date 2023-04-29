@@ -7,10 +7,10 @@ const contentHTML = theory.map(section => `
                     <div class="section__theme-title">${theme.title}</div>
                     <div class="section__theme-content">
                         ${theme.questions.map((question, qIndex) => `
-                            <div class="section__question">
+                            <div class="section__question" id="${question.id}">
                                 <div class="section__question-text">
                                     <div class="section__question-text-number">${qIndex + 1}.&nbsp;</div>
-                                    ${question.text}
+                                    ${question.text} ${question.siblings.map((sib, sInd) => `<span class="section__question-sibling" data-id="${sib}">Такой же ${sInd + 1}</span>`).join('')}
                                 </div>
                                 <div class="section__question-options">
                                     ${question.options.map(option => `

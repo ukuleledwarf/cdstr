@@ -55,6 +55,15 @@ body {
     margin-bottom: 30px;
 }
 
+.section__question-sibling {
+    background-color: #488796;
+    color: white;
+    padding: 0px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
 .section__question-text {
     font-weight: bold;
     display: flex;
@@ -106,4 +115,20 @@ body {
 
 .section__question_revealed .section__question-option_answer .section__question-img {
     box-shadow: 0 0 5px rgb(0, 212, 0);
+}
+
+.solution-modal {
+    position: fixed;
+    color: white;
+    padding: 20px;
+    background: rgba(0,77,90, .9);
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    line-height: 24px;
+}
+
+.solution-modal .title-big {
+    margin-bottom: 10px;
 }
