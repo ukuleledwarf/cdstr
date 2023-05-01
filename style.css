@@ -44,11 +44,6 @@ body {
 
 .section__theme-content {
     padding-top: 20px;
-    display: none;
-}
-
-.unfolded .section__theme-content {
-    display: block;
 }
 
 .section__question {
@@ -61,7 +56,8 @@ body {
     padding: 0px 10px;
     border-radius: 20px;
     cursor: pointer;
-    margin-left: 10px;
+    margin-left: 5px;
+    display: inline-block;
 }
 
 .section__question-text {
@@ -127,6 +123,7 @@ body {
     top: 0;
     left: 0;
     line-height: 24px;
+    overflow-y: auto;
 }
 
 .solution-modal .title-big {

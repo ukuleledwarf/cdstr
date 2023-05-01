@@ -20,7 +20,7 @@
                 return;
             }
             if(e.target.matches('.section__theme-title')){
-                e.target.parentElement.classList.toggle('unfolded');
+                toggleThemeContent(e.target.parentElement);
             }
             const label = e.target.closest('.section__question-option');
             if(label){
