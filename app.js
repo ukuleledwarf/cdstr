@@ -6,6 +6,7 @@ import { API } from './api.js';
 const users = [
     'innaos',
     'yuriypros',
+    'sergeystad',
 ];
 
 
