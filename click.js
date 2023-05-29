@@ -15,7 +15,7 @@ export function listenAppClicks(theory, api){
             document.body.insertAdjacentHTML('beforeend', `<div class="solution-modal">${question.solutionHTML}</div>`);
             return;
         }
-        if(e.target.matches('.section__theme-title, .section__theme-title *')){
+        if(e.target.matches('.section__theme-title, .section__theme-title *') && !window.cadastrSearch){
             const themeEl = e.target.closest('.section__theme');
             const sectionEl = themeEl.closest('.section');
             const themeIndex = themeEl.dataset.themeIndex;
@@ -23,7 +23,7 @@ export function listenAppClicks(theory, api){
             themeObj.open = !themeObj.open;
             themeEl.outerHTML = renderTheme(themeObj, themeIndex);
         }
-        if(e.target.matches('.section__question-text, .section__question-text *')){
+        if(e.target.matches('.section__question-text, .section__question-text *') && !window.cadastrSearch){
             const questionEl = e.target.closest('.section__question');
             const questionId = questionEl.id;
             const themeEl = e.target.closest('.section__theme');

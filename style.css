@@ -8,6 +8,22 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.search {
+    display: block;
+    width: calc(100% - 40px);
+    max-width: calc(900px - 40px);
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: -10px;
+    height: 25px;
+    border: 1px solid #586f64;
+    padding: 0 10px;
+}
+
+.search-match {
+    background: yellow;
+}
+
 #content {
     width: 100%;
     max-width: 900px;

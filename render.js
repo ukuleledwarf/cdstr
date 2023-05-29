@@ -1,10 +1,10 @@
 export function renderQuestion(question, qIndex){
-    return `
-        <div class="section__question ${question.learnt ? 'section__question_learnt' : ''}" id="${question.id}">
+    return question.matched ? `
+        <div class="section__question ${(question.learnt && !window.cadastrSearch) ? 'section__question_learnt' : ''}" id="${question.id}">
             <div class="section__question-text">
                 <div class="section__question-text-number">${qIndex + 1}.&nbsp;</div>
                 <div>
-                    ${question.text}
+                    ${question.markedText}
                     ${question.siblings.map(
                         (sib, sInd) => `<span class="section__question-sibling" data-id="${sib}">Такой же ${sInd + 1}</span>`
                     ).join('')}
@@ -22,7 +22,7 @@ export function renderQuestion(question, qIndex){
                 `).join('')}
             </div>
         </div>
-    `
+    ` : ''
 }
 
 export function renderThemeProgress(questions){
@@ -35,21 +35,21 @@ export function renderTheme(theme, themeIndex){
     const content = theme.open ? `<div class="section__theme-content">
         ${theme.questions.map((question, qIndex) => renderQuestion(question, qIndex)).join('')}
     </div>` : '';
-    return `
+    return theme.matched ? `
         <div class="section__theme" data-theme-index="${themeIndex}">
             <div class="section__theme-title">${theme.title} <b>(${theme.questions.length})</b><span class="section__theme-progress">${renderThemeProgress(theme.questions)}</span></div>
             ${content}
         </div>
-    `;
+    ` : '';
 }
 
 export function render(theory){
-    return theory.map((section, sectionIndex) => `
+    return theory.map((section, sectionIndex) => section.matched ? `
         <div class="section" data-section-index="${sectionIndex}">
             <div class="section__title">Раздел ${section.name}</div>
             <div class="section__content">
                 ${section.themes.map((theme, themeIndex) => renderTheme(theme, themeIndex)).join('')}
             </div>
         </div>
-    `).join('');
+    ` : '').join('');
 }
