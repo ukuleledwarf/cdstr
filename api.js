@@ -1,8 +1,8 @@
 export class API {
-    FETCH_URL = 'https://picked-egret-33209.upstash.io/';
+    FETCH_URL = 'https://skilled-marmot-38812.upstash.io/';
     FETCH_OPTIONS = {
         headers: {
-            Authorization: 'AYG5ACQgZGE2YmYzNTctYTY4NS00Nzk3LTllOWQtZGI3NjE3ZjhmMzFmM2ZhMjJhZjNjN2JlNGFkYTg5MjEyMGE3NWQyZDMzNjM=',
+            Authorization: 'AZecACQgYjQ0YjhhNjYtYmFmMy00YzgxLTk5NmEtMTdmYmE0NGZmYmRjMjg2YTcyMTYxMzkwNDUwMjhiZTM1ODlmN2U5NWEwM2U=',
         }
     }
     constructor(user){
