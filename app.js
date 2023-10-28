@@ -11,9 +11,16 @@ const users = [
 
 const user = window.location.search.slice(1);
 
+window.cadastrAppConfig = {
+    // can user confirm or unconfirm questions
+    canConfirm: user === 'innaos',
+};
+
 if(users.includes(user)){
     const api = new API(user);
-    const learntQuestionIds = await api.get();
+    const learntQuestionIds = await api.getAllLearnt();
+    const comfirmedQuestions = await api.getAllConfirmed();
+    console.log(comfirmedQuestions)
     const theory = sections.map(section => ({
         ...section,
         matched: true,
@@ -26,6 +33,7 @@ if(users.includes(user)){
                 matched: true,
                 markedText: question.text,
                 learnt: learntQuestionIds.includes(question.id),
+                confirmed: comfirmedQuestions[question.id],
             }))
         }))
     }));

@@ -15,6 +15,27 @@ export function listenAppClicks(theory, api){
             document.body.insertAdjacentHTML('beforeend', `<div class="solution-modal">${question.solutionHTML}</div>`);
             return;
         }
+        if(e.target.matches('.section__question-confirmation')){
+            if(!window.cadastrAppConfig.canConfirm){
+                return;
+            }
+            const questionEl = e.target.closest('.section__question');
+            const questionId = questionEl.id;
+            const themeEl = e.target.closest('.section__theme');
+            const themeIndex = themeEl.dataset.themeIndex;
+            const sectionIndex = e.target.closest('.section').dataset.sectionIndex;
+            const questions = theory[sectionIndex].themes[themeIndex].questions;
+            const questionObj = questions.find(q => q.id === questionId);
+            if(questionObj.confirmed){
+                api.unconfirm(questionId);
+                questionObj.confirmed = undefined;
+            } else {
+                api.confirm(questionId);
+                questionObj.confirmed = Date.now();
+            }
+            questionEl.outerHTML = renderQuestion(questionObj, questions.indexOf(questionObj));
+            return;
+        }
         if(e.target.matches('.section__theme-title, .section__theme-title *') && !window.cadastrSearch){
             const themeEl = e.target.closest('.section__theme');
             const sectionEl = themeEl.closest('.section');
@@ -34,7 +55,7 @@ export function listenAppClicks(theory, api){
             questionObj.learnt = !questionObj.learnt;
             questionEl.outerHTML = renderQuestion(questionObj, questions.indexOf(questionObj));
             themeEl.querySelector('.section__theme-progress').innerHTML = renderThemeProgress(questions);
-            questionObj.learnt ? api.add(questionId) : api.delete(questionId);
+            questionObj.learnt ? api.addLearnt(questionId) : api.deleteLearnt(questionId);
         }
         const label = e.target.closest('.section__question-option');
         if(label){

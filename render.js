@@ -8,7 +8,18 @@ export function renderQuestion(question, qIndex){
                     ${question.siblings.map(
                         (sib, sInd) => `<span class="section__question-sibling" data-id="${sib}">Такой же ${sInd + 1}</span>`
                     ).join('')}
-                    <span class="section__question-solution">?</span>
+                    ${(function(){
+                        const poinerClass = window.cadastrAppConfig.canConfirm ? 'section__question-confirmation_pointer' : '';
+                        const confirmedTitleEnding = window.cadastrAppConfig.canConfirm ? ' Нажмите чтобы отменить проверенность.' : '';
+                        if(question.confirmed){
+                            return `<span title="Вопрос проверен (сверен с офиц. тестами) ${new Date(+question.confirmed)}.${confirmedTitleEnding}" class="section__question-confirmation section__question-confirmation_confirmed ${poinerClass}">✔</span>`;
+                        }
+                        if(window.cadastrAppConfig.canConfirm){
+                            return `<span title="Нажмите чтобы подтвердить правильность вопроса и ответа" class="section__question-confirmation ${poinerClass}">✔</span>`;
+                        }
+                        return '';
+                    })()}
+                    <span title="Решение" class="section__question-solution">?</span>
                 </div>
             </div>
             <div class="section__question-options">

@@ -12,6 +12,10 @@ class Question {
     solutionHTML = String;
     siblings = [String];
     learnt = Boolean;
+    /** timestamp when the question was confirmed */
+    confirmed = Number || undefined;
+    matched = Boolean;
+    markedText = String;
 }
 
 class Theme {
@@ -20,4 +24,9 @@ class Theme {
     open = Boolean;
     // percents of learnt questions
     progress = Number;
+    matched = Boolean;
+}
+
+class Section {
+    matched = Boolean;
 }
