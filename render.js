@@ -1,13 +1,15 @@
 export function renderQuestion(question, qIndex){
     return question.matched ? `
         <div class="section__question ${(question.learnt && !window.cadastrSearch) ? 'section__question_learnt' : ''}" id="${question.id}">
-            <div class="section__question-text">
-                <div class="section__question-text-number">${qIndex + 1}.&nbsp;</div>
-                <div>
-                    ${question.markedText}
-                    ${question.siblings.map(
-                        (sib, sInd) => `<span class="section__question-sibling" data-id="${sib}">Такой же ${sInd + 1}</span>`
-                    ).join('')}
+            <div class="section__question-header">
+                <div class="section__question-number">${qIndex + 1}.&nbsp;</div>
+                <div class="section__question-header-content">
+                    <span class="section__question-text-with-siblings">
+                        ${question.markedText}
+                        ${question.siblings.map(
+                            (sib, sInd) => `<span class="section__question-sibling" data-id="${sib}">Такой же ${sInd + 1}</span>`
+                        ).join('')}
+                    </span>
                     ${(function(){
                         const poinerClass = window.cadastrAppConfig.canConfirm ? 'section__question-confirmation_pointer' : '';
                         const confirmedTitleEnding = window.cadastrAppConfig.canConfirm ? ' Нажмите чтобы отменить проверенность.' : '';
@@ -36,6 +38,22 @@ export function renderQuestion(question, qIndex){
     ` : ''
 }
 
+export function renderThemeBulkConfirmationButton(theme){
+    if(!window.cadastrAppConfig.canConfirm){
+        return '';
+    }
+    const hasUnconfirmed = theme.questions.some(q => !q.confirmed);
+    const text = hasUnconfirmed ? 'Верифицировать все вопросы в теме' : 'Отменить верификацию вопросов темы'; 
+    return `<button class="section__theme-bulk-confirmation">${text}</button>`;
+}
+
+export function renderThemeConfirmationStatus(theme){
+    if(theme.questions.some(q => !q.confirmed)){
+        return '';
+    }
+    return `✔`;
+}
+
 export function renderThemeProgress(questions){
     const learntCount = questions.filter(q => q.learnt).length;
     const percents = learntCount * 100 / questions.length;
@@ -44,11 +62,17 @@ export function renderThemeProgress(questions){
 
 export function renderTheme(theme, themeIndex){
     const content = theme.open ? `<div class="section__theme-content">
+        <div class="section__theme-bulk-confirmation-container">${renderThemeBulkConfirmationButton(theme)}</div>
         ${theme.questions.map((question, qIndex) => renderQuestion(question, qIndex)).join('')}
     </div>` : '';
     return theme.matched ? `
         <div class="section__theme" data-theme-index="${themeIndex}">
-            <div class="section__theme-title">${theme.title} <b>(${theme.questions.length})</b><span class="section__theme-progress">${renderThemeProgress(theme.questions)}</span></div>
+            <div class="section__theme-title">
+                ${theme.title} 
+                <b>(${theme.questions.length})</b>
+                <span class="section__theme-progress">${renderThemeProgress(theme.questions)}</span>
+                <span class="section__theme-confirmation-status" title="Все вопросы и ответы в этой теме были проверены в официальном тренажере">${renderThemeConfirmationStatus(theme)}</span>
+            </div>
             ${content}
         </div>
     ` : '';

@@ -7,20 +7,22 @@ const users = [
     'innaos',
     'yuriypros',
     'sergeystad',
+    'testusr',
 ];
+
+const superusers = ['innaos', 'testusr'];
 
 const user = window.location.search.slice(1);
 
 window.cadastrAppConfig = {
     // can user confirm or unconfirm questions
-    canConfirm: user === 'innaos',
+    canConfirm: superusers.includes(user),
 };
 
 if(users.includes(user)){
     const api = new API(user);
     const learntQuestionIds = await api.getAllLearnt();
     const comfirmedQuestions = await api.getAllConfirmed();
-    console.log(comfirmedQuestions)
     const theory = sections.map(section => ({
         ...section,
         matched: true,

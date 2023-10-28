@@ -1,4 +1,4 @@
-import { renderTheme, renderQuestion, renderThemeProgress } from './render.js';
+import { renderTheme, renderQuestion, renderThemeProgress, renderThemeBulkConfirmationButton, renderThemeConfirmationStatus } from './render.js';
 
 export function listenAppClicks(theory, api){
     document.addEventListener('click', e => {
@@ -6,6 +6,31 @@ export function listenAppClicks(theory, api){
         if(sibling){
             const destElement = document.getElementById(sibling.dataset.id);
             destElement.scrollIntoView({behavior: 'smooth'});
+            return;
+        }
+        if(e.target.matches('.section__theme-bulk-confirmation')){
+            const themeEl = e.target.closest('.section__theme');
+            const themeIndex = themeEl.dataset.themeIndex;
+            const sectionIndex = e.target.closest('.section').dataset.sectionIndex;
+            const themeObj = theory[sectionIndex].themes[themeIndex];
+            const questions = themeObj.questions;
+            const hasUnconfirmed = questions.some(q => !q.confirmed);
+            const confirmText = hasUnconfirmed ? 
+                'Вы уверены что хотите пометить все вопросы этой темы как проверенные?' :
+                'Вы уверены что хотите отменить верификацию всех вопросов в этой теме?';
+            if(!confirm(confirmText)){
+                return;
+            }
+            const ids = questions.map(q => q.id);
+            if(hasUnconfirmed){
+                api.confirmAll(ids);
+                const now = Date.now();
+                questions.forEach(q => q.confirmed = +(new Date(now)));
+            } else {
+                api.unconfirmAll(ids);
+                questions.forEach(q => q.confirmed = undefined);
+            }
+            themeEl.outerHTML = renderTheme(themeObj, themeIndex);
             return;
         }
         if(e.target.matches('.section__question-solution')){
@@ -24,7 +49,8 @@ export function listenAppClicks(theory, api){
             const themeEl = e.target.closest('.section__theme');
             const themeIndex = themeEl.dataset.themeIndex;
             const sectionIndex = e.target.closest('.section').dataset.sectionIndex;
-            const questions = theory[sectionIndex].themes[themeIndex].questions;
+            const themeObj = theory[sectionIndex].themes[themeIndex];
+            const questions = themeObj.questions;
             const questionObj = questions.find(q => q.id === questionId);
             if(questionObj.confirmed){
                 api.unconfirm(questionId);
@@ -33,6 +59,8 @@ export function listenAppClicks(theory, api){
                 api.confirm(questionId);
                 questionObj.confirmed = Date.now();
             }
+            themeEl.querySelector('.section__theme-bulk-confirmation-container').innerHTML = renderThemeBulkConfirmationButton(themeObj);
+            themeEl.querySelector('.section__theme-confirmation-status').innerHTML = renderThemeConfirmationStatus(themeObj);
             questionEl.outerHTML = renderQuestion(questionObj, questions.indexOf(questionObj));
             return;
         }
@@ -44,7 +72,7 @@ export function listenAppClicks(theory, api){
             themeObj.open = !themeObj.open;
             themeEl.outerHTML = renderTheme(themeObj, themeIndex);
         }
-        if(e.target.matches('.section__question-text, .section__question-text *') && !window.cadastrSearch){
+        if(e.target.matches('.section__question-header, .section__question-header *') && !window.cadastrSearch){
             const questionEl = e.target.closest('.section__question');
             const questionId = questionEl.id;
             const themeEl = e.target.closest('.section__theme');

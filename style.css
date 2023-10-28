@@ -52,6 +52,7 @@ body {
     padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
+    position: relative;
 }
 
 .section__theme-progress {
@@ -62,6 +63,22 @@ body {
     padding: 2px 4px;
     border-radius: 5px;
     margin-left: 5px;
+}
+
+.section__theme-confirmation-status {
+    font-size: 12px;
+    background: #688075;
+    color: white;
+    padding: 2px 5px;
+    border-radius: 0 5px 0 5px;
+    margin-left: 5px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.section__theme-confirmation-status:empty {
+    display: none;
 }
 
 .section__theme-progress::after {
@@ -76,15 +93,30 @@ body {
     padding-top: 20px;
 }
 
+.section__theme-bulk-confirmation {
+    margin-bottom: 15px;
+    margin-left: auto;
+    display: block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    background: #688075;
+    color: white;
+}
+
+.section__theme-bulk-confirmation:hover {
+    background: #4d6058;
+}
+
 .section__question {
     margin-bottom: 30px;
 }
 
 .section__question_learnt {
-    opacity: .3;
-    max-height: 16px;
+    max-height: 21px;
     overflow: hidden;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .section__question-sibling {
@@ -98,6 +130,7 @@ body {
 }
 
 .section__question-solution {
+    flex-shrink: 0;
     margin-left: 5px;
     cursor: pointer;
     color: #d1d1d1;
@@ -112,7 +145,13 @@ body {
     vertical-align: text-top;
 }
 
+.section__question-solution:hover {
+    color: #b0b0b0;
+    border-color: #b0b0b0;
+}
+
 .section__question-confirmation {
+    flex-shrink: 0;
     font-size: 14px;
     margin-left: 5px;
     color: #d1d1d1;
@@ -128,6 +167,11 @@ body {
     vertical-align: text-top;
 }
 
+.section__question-confirmation:not(.section__question-confirmation_confirmed):hover {
+    color: #b0b0b0;
+    border-color: #b0b0b0;
+}
+
 .section__question-confirmation_confirmed {
     border-color: #688075;
     background: #688075;
@@ -138,18 +182,24 @@ body {
     cursor: pointer;
 }
 
-.section__question-solution:hover {
-    color: #b0b0b0;
-    border-color: #b0b0b0;
-}
-
-.section__question-text {
+.section__question-header {
     font-weight: bold;
     display: flex;
 }
 
-.section__question-text-number {
+.section__question-number {
     flex-shrink: 0;
+}
+
+.section__question_learnt .section__question-header-content {
+    display: flex;
+    flex-grow: 1;
+    align-items: flex-start;
+}
+
+.section__question_learnt .section__question-text-with-siblings {
+    flex-grow: 1;
+    opacity: .3;
 }
 
 .section__question-options {

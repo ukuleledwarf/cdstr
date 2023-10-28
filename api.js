@@ -51,4 +51,17 @@ export class API {
         const obj = await res.json();
         return 'result' in obj;
     }
+    async confirmAll(ids){
+        const time = Date.now();
+        const urlTail = ids.map(id => `/${id}/${time}`).join('');
+        const res = await fetch(`${this.FETCH_URL}hset/${this.CONFIRMED_QUESTIONS_HASH_NAME}${urlTail}`, this.FETCH_OPTIONS);
+        const obj = await res.json();
+        return 'result' in obj;
+    }
+    async unconfirmAll(ids){
+        const urlTail = ids.map(id => `/${id}`).join('');
+        const res = await fetch(`${this.FETCH_URL}hdel/${this.CONFIRMED_QUESTIONS_HASH_NAME}${urlTail}`, this.FETCH_OPTIONS);
+        const obj = await res.json();
+        return 'result' in obj;
+    }
 }
